@@ -1,0 +1,10 @@
+Build.PL
+lib/Module/Mask.pm
+MANIFEST			This list of files
+META.yml
+t/01..mask.t
+t/02..inverted.t
+t/99..pod.t
+t/lib/Dummy.pm
+t/lib/Other.pm
+Makefile.PL
