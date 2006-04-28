@@ -3,11 +3,11 @@ package Module::Mask;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 NAME
 
-Module::Mask - pretend certain modules are not installed
+Module::Mask - Pretend certain modules are not installed
 
 =head1 SYNOPSIS
 
@@ -216,21 +216,46 @@ sub Module::Mask::INC {
     my ($self, $filename) = @_;
 
     if ($self->is_masked($filename)) {
-        local $" = " ";
-
-        my $msg = shortmess(
-            "Couldn't locate $filename in \@INC ",
-            "(\@INC contains: @INC)",
-        );
-
-        # real require failures end in a full-stop.
-        $msg =~ s/\s+ \z/./x;
-
-        die "$msg\n";
+        die $self->message($filename);
     }
     else {
         return;
     }
+}
+
+=head2 message
+
+    $message = $obj->message($filename)
+
+Returns the "module not found" message for the given filename. This should be
+identical to the message that perl generates, so that code that detects missing
+modules works as expected.
+
+If you want module masking to be more obvious, override this method yourself:
+
+    @My::Mask::ISA = 'Module::Mask';
+    sub My::Mask::message = sub {
+        my ($self, $filename) = @_;
+        return "$filename masked\n";
+    }
+
+The return value is passed directly to die in INC().
+
+=cut
+
+sub message {
+    my ($self, $filename) = @_;
+
+    local $" = " ";
+    my $msg = shortmess(
+        "Can't locate $filename in \@INC ",
+        "(\@INC contains: @INC)",
+    );
+
+    # real require failures end in a full-stop.
+    $msg =~ s/\s+ \z/.\n/x;
+
+    return $msg;
 }
 
 1;

@@ -1,0 +1,11 @@
+Module::Mask changes document
+
+1.01	next version
+    - Added message() method to allow overriding the message used when a module
+      is masked.
+
+    - Fixed the generated error message to be identical to perl's
+
+    - Added Changes and README
+
+1.00	initial version

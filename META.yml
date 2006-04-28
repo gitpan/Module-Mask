@@ -1,12 +1,12 @@
 ---
 name: Module-Mask
-version: 0.01
+version: 0.02
 author:
   - 'Matt Lawrence <mattlaw@cpan.org>'
-abstract: pretend certain modules are not installed
+abstract: Pretend certain modules are not installed
 license: perl
 requires:
-  Module::Util: 0
+  Module::Util: 1.00
   Scalar::Util: 1.01
   perl: 5.8.0
 recommends:
@@ -17,5 +17,5 @@ build_requires:
 provides:
   Module::Mask:
     file: lib/Module/Mask.pm
-    version: 0.01
+    version: 0.02
 generated_by: Module::Build version 0.2611
