@@ -79,7 +79,7 @@ is(@warnings, 0, 'No warnings generated')
     my $mask = new My::Mask qw( Dummy );
 
     eval {
-        local %INC; # Dummy s already loaded, let's pretend otherwise..
+        local %INC; # Dummy is already loaded, let's pretend otherwise..
         require Dummy;
     };
 

@@ -3,7 +3,7 @@ package Module::Mask;
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 NAME
 
@@ -54,6 +54,24 @@ use Carp qw( shortmess );
 require Carp::Heavy;
 
 =head1 METHODS
+
+=head2 import
+
+    use Module::Mask @modules;
+
+    $class->import(@modules);
+
+Globally masks modules. This can be used to block optional modules for testing
+purposes.
+
+    perl -MModule::Mask=MyOptionalModule my_test.pl
+
+=cut
+
+sub import {
+    my $class = shift;
+    our $Mask = $class->new(@_);
+}
 
 =head2 new
 

@@ -1,6 +1,11 @@
 Module::Mask changes document
 
-1.01	next version
+0.03 - Mon Jul 16 2007
+    - Added import() method to allow easier command-line masking
+
+0.02 - Fri Apr 28 2006
+    - Added module documentation
+
     - Added message() method to allow overriding the message used when a module
       is masked.
 
@@ -8,4 +13,4 @@ Module::Mask changes document
 
     - Added Changes and README
 
-1.00	initial version
+0.01	initial version
