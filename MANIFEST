@@ -11,3 +11,4 @@ t/03..import.t
 t/99..pod.t
 t/lib/Dummy.pm
 t/lib/Other.pm
+META.json

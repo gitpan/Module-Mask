@@ -3,7 +3,7 @@ package Module::Mask;
 use strict;
 use warnings;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 =head1 NAME
 
@@ -270,8 +270,9 @@ sub message {
         "(\@INC contains: @INC)",
     );
 
-    # real require failures end in a full-stop.
-    $msg =~ s/\s+ \z/.\n/x;
+    # Real require failures end in a full-stop.
+    # This is only necessary prior to Carp 1.25
+    $msg =~ s/(?<!\.) \s+ \z/.\n/x;
 
     return $msg;
 }
