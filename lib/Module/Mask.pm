@@ -3,7 +3,7 @@ package Module::Mask;
 use strict;
 use warnings;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 =head1 NAME
 
@@ -245,36 +245,22 @@ sub Module::Mask::INC {
 
     $message = $obj->message($filename)
 
-Returns the "module not found" message for the given filename. This should be
-identical to the message that perl generates, so that code that detects missing
-modules works as expected.
+Returns the error message to be used when the filename is not found. This is
+normally "$filename masked by $class", but can be overridden in subclasses if
+necessary. Carp's L<shortmess|Carp/shortmess> is used to make this message
+appear to come from the caller, i.e. the C<require> or C<use> statement
+attempting to load the file.
 
-If you want module masking to be more obvious, override this method yourself:
-
-    @My::Mask::ISA = 'Module::Mask';
-    sub My::Mask::message = sub {
-        my ($self, $filename) = @_;
-        return "$filename masked\n";
-    }
-
-The return value is passed directly to die in INC().
+One possible application of this would be to make the error message look more
+like perl's native "Could not find $filename in \@INC ...".
 
 =cut
 
 sub message {
     my ($self, $filename) = @_;
+    my $class = ref $self;
 
-    local $" = " ";
-    my $msg = shortmess(
-        "Can't locate $filename in \@INC ",
-        "(\@INC contains: @INC)",
-    );
-
-    # Real require failures end in a full-stop.
-    # This is only necessary prior to Carp 1.25
-    $msg =~ s/(?<!\.) \s+ \z/.\n/x;
-
-    return $msg;
+    return shortmess("$filename masked by $class");
 }
 
 1;
@@ -317,4 +303,3 @@ Matt Lawrence E<lt>mattlaw@cpan.orgE<gt>
 =cut
 
 vim: ts=8 sts=4 sw=4 sr et
-

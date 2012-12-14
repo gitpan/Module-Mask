@@ -16,7 +16,10 @@ use lib qw( t/lib );
 
     my $file = __FILE__;
     my $line = __LINE__; eval { require Dummy };
-    like($@, qr(^Can't locate Dummy\.pm in \@INC), 'Dummy was masked');
+    like(
+        $@, qr(^Dummy\.pm masked by Module::Mask::Inverted\b),
+        'Dummy was masked'
+    );
     like($@, qr(line\s+\Q$line\E), 'line number correct');
     like($@, qr(at\s+\Q$file\E), 'file name correct');
 

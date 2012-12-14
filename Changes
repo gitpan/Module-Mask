@@ -1,5 +1,16 @@
 Module::Mask changes document
 
+0.05 - Fri Dec 14 2012
+    - Stop trying to match perl's native error message, it's about to change
+      in a way which won't be trivial to continue to support with backwards
+      compatibility.
+
+      Users who need the error message to match can override the message()
+      method to match their perl.
+
+0.04 - Sat Mar 03 2012
+    - Cope with Carp sometimes adding a full-stop to error messages.
+
 0.03 - Mon Jul 16 2007
     - Added import() method to allow easier command-line masking
 

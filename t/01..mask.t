@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 20;
+use Test::More tests => 19;
 
 BEGIN { use_ok("Module::Mask") };
 
@@ -27,7 +27,7 @@ is_deeply(\@INC, \@old_inc, '@INC is left unchanged by empty mask');
     my $mask = new Module::Mask ('Dummy');
     my $file = __FILE__;
     my $line = __LINE__; eval { require Dummy };
-    like($@, qr(^Can't locate Dummy\.pm in \@INC), 'Dummy was masked');
+    like($@, qr(^Dummy\.pm masked by Module::Mask\b), 'Dummy was masked');
 
     my ($err_file, $err_line) = $@ =~ /at \s+ (.*?) \s+ line \s+ (\d+) \. $/xm;
     is($err_file, $file, 'file name correct');
@@ -59,14 +59,6 @@ is_deeply(\@INC, \@old_inc, '@INC is left unchanged');
 
 is(@warnings, 0, 'No warnings generated')
     or diag "Got warnings:\n".join("\n", @warnings);
-
-{
-    my $mask = new Module::Mask;
-    # the two require statements must be on the same line for the error message
-    # to be identical.
-    eval { require Absent }; my $msg = $@; $mask->mask_modules('Absent'); eval { require Absent };
-    is($@, $msg, "Module::Mask's error message is the same as perl's");
-}
 
 {
     # Overriding message
