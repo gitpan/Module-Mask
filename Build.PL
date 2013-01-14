@@ -36,6 +36,9 @@ my $builder = Module::Build->new(
     build_requires => {
         'Test::More' => 0,
     },
+    configure_requires => {
+        'Module::Build' => '0.40',
+    },
     recommends => {
         'Test::Pod' => '1.14',
         'Test::Pod::Coverage' => '1.04',

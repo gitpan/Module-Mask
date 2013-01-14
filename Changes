@@ -1,5 +1,8 @@
 Module::Mask changes document
 
+0.06 - Tue Jan  8 2013
+    - Fix tests to not rely on trailing full stop in Carp message
+
 0.05 - Fri Dec 14 2012
     - Stop trying to match perl's native error message, it's about to change
       in a way which won't be trivial to continue to support with backwards

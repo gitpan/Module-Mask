@@ -29,7 +29,9 @@ is_deeply(\@INC, \@old_inc, '@INC is left unchanged by empty mask');
     my $line = __LINE__; eval { require Dummy };
     like($@, qr(^Dummy\.pm masked by Module::Mask\b), 'Dummy was masked');
 
-    my ($err_file, $err_line) = $@ =~ /at \s+ (.*?) \s+ line \s+ (\d+) \. $/xm;
+    my ($err_file, $err_line) = $@ =~ /at \s+ (.*?) \s+ line \s+ (\d+)/x
+        or diag "Error didn't match expected pattern:\n$@";
+
     is($err_file, $file, 'file name correct');
     is($err_line, $line, 'line number correct');
 
